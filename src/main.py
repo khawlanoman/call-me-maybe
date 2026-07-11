@@ -1,5 +1,5 @@
 import  argparse
-
+import parser
 
 def parser_args() -> None:
     parser = argparse.ArgumentParser()
@@ -7,7 +7,9 @@ def parser_args() -> None:
     parser.add_argument("--input", default="data/input/function_calling_tests.json")
     parser.add_argument("--output", default="data/output/function_calls.json")
     args = parser.parse_args()
-    #print(f"args= {args}")
+    return args
+    #print(f"args= {args.input}")
 
 if __name__ == "__main__":
-    parser_args()
+    args = parser_args()
+    parser.parsing(args)
