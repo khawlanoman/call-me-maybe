@@ -1,6 +1,7 @@
 
 install:
-	uv sync
+# 	export UV_CACHE_DIR="$HOME/.cache/uv"
+	uv add torch transformers
 
 run:
 	uv run python -m src
