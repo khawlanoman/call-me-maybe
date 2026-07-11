@@ -3,10 +3,10 @@ install:
 	uv sync
 
 run:
-	uv run  python -m src
+	uv run python -m src
 	
 debug:
-	uv python -m pdb 
+	uv run python -m pdb -m src
 
 clean:
 	rm -rf __pycache__
