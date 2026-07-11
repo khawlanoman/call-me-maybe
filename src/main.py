@@ -12,4 +12,5 @@ def parser_args() -> None:
 
 if __name__ == "__main__":
     args = parser_args()
-    parser.parsing(args)
+    parser.read_input_calling(args)
+    parser.read_input_definition(args)
