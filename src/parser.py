@@ -52,7 +52,7 @@ def read_input_definition(files) -> None:
         except ValidationError as e:
             print(f"invalid function:{e}")
             sys.exit(0)
-
+   
     return(function_list)
     #print(function_list)
 

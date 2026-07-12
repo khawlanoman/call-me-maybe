@@ -1,5 +1,6 @@
 import  argparse
 import parser
+import start
 
 def parser_args() -> None:
     parser = argparse.ArgumentParser()
@@ -12,5 +13,7 @@ def parser_args() -> None:
 
 if __name__ == "__main__":
     args = parser_args()
-    parser.read_input_calling(args)
-    parser.read_input_definition(args)
+    prompts = parser.read_input_calling(args)
+    functions = parser.read_input_definition(args)
+
+    start.llm_prompt(prompts, functions)
