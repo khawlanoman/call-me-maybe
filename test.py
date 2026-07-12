@@ -1,5 +1,9 @@
 from llm_sdk.llm_sdk import Small_LLM_Model
+from transformers import AutoTokenizer
 
+tokenizer = AutoTokenizer.from_pretrained("GPT2")
+text = "Hello khawla"
 
 model = Small_LLM_Model()
-print(model.encode("Hello"))
+print(tokenizer.tokenize(text))
+print(model.encode(text))
