@@ -17,8 +17,10 @@ if __name__ == "__main__":
     functions = parser.read_input_definition(args)
 
     list_prompt = start.llm_prompt(prompts)
-    print(functions_name = start.function_token_ids(functions))
-
-   # print(start.convet(list_prompt, functions_name))
+    functions_name = start.function_token_ids(functions)
+    #print(functions_name)
+    for p in prompts:
+        print(p)
+        print(start.convet(p, functions_name, functions))
     # token_ids = start.convert_to_token_ids(list_prompt)
     # start.get_score(token_ids)
