@@ -3,6 +3,7 @@ src/__init__.py
 src/main.py
 src/models.py
 src/parser.py
+src/start.py
 src/call_me_maybe.egg-info/PKG-INFO
 src/call_me_maybe.egg-info/SOURCES.txt
 src/call_me_maybe.egg-info/dependency_links.txt

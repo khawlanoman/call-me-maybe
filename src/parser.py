@@ -1,6 +1,6 @@
 from pydantic import ValidationError
 import json
-import models
+from . import models
 import sys
 def read_input_calling(files) -> None:
     
