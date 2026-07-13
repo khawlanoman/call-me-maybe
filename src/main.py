@@ -16,4 +16,6 @@ if __name__ == "__main__":
     prompts = parser.read_input_calling(args)
     functions = parser.read_input_definition(args)
 
-    start.llm_prompt(prompts, functions)
+    list_prompt = start.llm_prompt(prompts, functions)
+    token_ids = start.convert_to_token_ids(list_prompt)
+    start.get_score(token_ids)
