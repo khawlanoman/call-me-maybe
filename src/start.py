@@ -95,15 +95,3 @@ def convet(prompt, list_functions, functions, model) -> str:
         result_txt = model.decode(result)
         if result_txt in functions_text:
             return result_txt
-    
-
-# def convert_to_token_ids(prompt_list : list) -> None:
-#     full_prompt = prompt_list[0]
-#     model = Small_LLM_Model()
-#     return (model.encode(full_prompt).squeeze().tolist())
-
-# def get_score(token_ids) -> None:
-#     print("hi")
-#     model = Small_LLM_Model()
-#     print (model.get_logits_from_input_ids(token_ids))
-
