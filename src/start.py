@@ -87,11 +87,17 @@ def convet(prompt, list_functions, functions, model) -> str:
         
         masked = np.full_like(logits, -np.inf)
 
-        for v in list_functions:
+        if result:
+            t_functions = [fn for fn in list_functions if fn[:len(result)] == result]
+        else:
+            t_functions = list_functions
+        for v in t_functions:
             for tkid in v:
                 masked[tkid] = logits[tkid]
         cor = np.argmax(masked)
         result.append(cor)
+       
         result_txt = model.decode(result)
+        print(result_txt)
         if result_txt in functions_text:
             return result_txt

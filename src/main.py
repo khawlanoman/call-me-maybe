@@ -1,6 +1,7 @@
 import  argparse
 from . import parser
 from . import start
+from .  import state_machine
 from llm_sdk.llm_sdk import Small_LLM_Model
 
 def parser_args() -> None:
@@ -23,6 +24,7 @@ if __name__ == "__main__":
     #print(functions_name)
     for p in prompts:
         print(p)
+        state_machine.state_machine( state_machine.State, "fn_add_number", p)
         print(start.convet(p, functions_name, functions, model))
     # token_ids = start.convert_to_token_ids(list_prompt)
     # start.get_score(token_ids)
