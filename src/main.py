@@ -22,10 +22,10 @@ if __name__ == "__main__":
 
 
     vocab = read_vocab.read_vocab(model)
-    # functions = parser.read_input_definition(args)
+    functions = parser.read_input_definition(args)
 
     # list_prompt = start.llm_prompt(prompts)
-    # functions_name = start.function_token_ids(functions, model)
+    functions_name = start.function_token_ids(functions, model)
     # #print(functions_name)
     # result = []
     # for p in prompts:
@@ -38,10 +38,13 @@ if __name__ == "__main__":
         #print(start.convet(p, functions_name, functions, model))
 
     # token_ids = start.convert_to_token_ids(list_prompt)
-    # start.get_score(token_ids)
+    #start.get_score(token_ids)
+    
+    
     all_prompt =[]
     for p in prompts:
-        result = (state_machine.state_machine( state_machine.State, "fn_add_number", p, vocab, model))
+        generate_fn = start.convet(p, functions_name, functions, model)
+        result = (state_machine.state_machine( state_machine.State,  , p, vocab, model))
         t_decode = model.decode(result)
         all_prompt.append(t_decode)
     

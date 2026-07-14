@@ -77,51 +77,21 @@ def  state_machine( State, function_n, prompt, vocab, model) -> None:
     
     return result
 
-        # if state == State.START:
-        #     print("{")
-        #     token = "{"
-        #     state = State.OPEN_BRACE
 
-        # if state == State.OPEN_BRACE:
-        #     print('"prompt"')
-        #     token = '"prompt"'
-        #     state = State.PROMPT
-        
-        # if state == State.PROMPT:
-        #     print(":")
-        #     token = ":"
-        #     state = State.COLON
-        
-        # if state == State.COLON:
-        #     print(f'"{prompt}"')
-        #     token = ":"
-        #     state = State.PROMPT_CONT
 
-        # if state == State.PROMPT_CONT:
-        #     print(",")
-        #     #token = 
-        #     state = State.COMMA
 
-        # if state == State.COMMA:
-        #     print('"name"')
-        #     token = '"name"'
-        #     state = State.NAME_COLON
-        
-        # if state == State.NAME_COLON:
-        #     print("")
 
-        # if state == State.NAME_KEY:
-        #     print(f'"{function_n}"')
-        #     #token = ","
-        #     state = State.COLON
-        
-        # if state == State.FUNCTION_NAME:
-        #     print("}")
-        #     token = "}"
-        #     state = State.CLOSE_BRACE
-        
-        # if state == State.CLOSE_BRACE:
-        #     state = State.END
-        
-        # if state == State.END:
-        #    break
+def generate_array(model, vocab,function_name, function,) -> None:
+    gen_list = []
+    start_list = read_vocab.take_token_vocab("[")
+    comma = read_vocab.take_token_vocab(",")
+    gen
+    for p in prompts:
+        generate_fn = start.convet(p, functions_name, functions, model)
+        result = (state_machine.state_machine( state_machine.State, generate_fn, p, vocab, model))
+        t_decode = model.decode(result)
+        all_prompt.append(t_decode)
+        if  p != prompts[-1]:
+
+
+    
