@@ -98,6 +98,6 @@ def convet(prompt, list_functions, functions, model) -> str:
         result.append(cor)
        
         result_txt = model.decode(result)
-        print(result_txt)
+
         if result_txt in functions_text:
             return result_txt

@@ -39,9 +39,11 @@ if __name__ == "__main__":
 
     # token_ids = start.convert_to_token_ids(list_prompt)
     # start.get_score(token_ids)
+    all_prompt =[]
     for p in prompts:
         result = (state_machine.state_machine( state_machine.State, "fn_add_number", p, vocab, model))
         t_decode = model.decode(result)
-
-        write_output.write_output(args, t_decode)
-        print(t_decode)
+        all_prompt.append(t_decode)
+    
+    write_output.write_output(args, all_prompt)
+        #print(t_decode)

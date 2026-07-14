@@ -2,3 +2,7 @@
 	"prompt":"What is the sum of 2 and 3?",
 	"name":"fn_add_number"
 }
+{
+	"prompt":"What is the sum of 265 and 345?",
+	"name":"fn_add_number"
+}
