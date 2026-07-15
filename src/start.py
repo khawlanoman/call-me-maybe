@@ -13,20 +13,23 @@ def llm_prompt(prompts: list) -> None:
 
     return (prompt_list)
 
-def function_token_ids(functions: list, model) -> None:
+def function_token_ids(functions: list, model, not_found_function) -> None:
    
     all_functions = []
     for v in functions:
         all_functions.append(model.encode(v.name).squeeze().tolist())
+    all_functions.append(model.encode(not_found_function["name"]).squeeze().tolist())
     return(all_functions)
 
 
-def convet(prompt, list_functions, functions, model) -> str:
+def convet(prompt, list_functions, functions, model ,not_found_function) -> str:
 
     functions_dict = {
         fn.name: fn.description for fn in functions
     }
-   
+
+    functions_dict[not_found_function["name"]] = not_found_function["description"]
+
     full_prompt = f"""
     You are a function selection agent.
 
@@ -101,3 +104,5 @@ def convet(prompt, list_functions, functions, model) -> str:
 
         if result_txt in functions_text:
             return result_txt
+        
+    return None

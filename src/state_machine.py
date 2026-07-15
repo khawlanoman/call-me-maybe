@@ -84,7 +84,7 @@ def  state_machine( State, function_n, prompt, vocab, model) -> None:
     return result
 
 
-def generate_array(model, vocab,functions_name, functions,start, prompts) -> None:
+def generate_array(model, vocab,functions_name, functions,start, prompts,not_found_function) -> None:
     all_prompt = []
     start_list = read_vocab.take_token_vocab(vocab, "[")
     end_list = read_vocab.take_token_vocab(vocab, "]")
@@ -95,7 +95,7 @@ def generate_array(model, vocab,functions_name, functions,start, prompts) -> Non
    # all_prompt.append(model.decode(tab_new_line))
     print(prompts)
     for p in prompts:
-        generate_fn = start.convet(p, functions_name, functions, model)
+        generate_fn = start.convet(p, functions_name, functions, model,not_found_function)
         result = (state_machine( State, generate_fn, p, vocab, model))
         t_decode = model.decode(result)
         all_prompt.append(t_decode)

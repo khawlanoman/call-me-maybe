@@ -26,8 +26,14 @@ if __name__ == "__main__":
     vocab = read_vocab.read_vocab(model)
     functions = parser.read_input_definition(args)
 
+    not_found_function  ={ 
+        "name":"fn_not_found", 
+        "description":" this  function is for the",
+        "parameters": {}
+        }
     # list_prompt = start.llm_prompt(prompts)
-    functions_name = start.function_token_ids(functions, model)
+    functions_name = start.function_token_ids(functions, model, not_found_function)
+    #print(functions_name)
     # #print(functions_name)
     # result = []
     # for p in prompts:
@@ -52,6 +58,7 @@ if __name__ == "__main__":
     
     # write_output.write_output(args, all_prompt)
         #print(t_decode)
-    all_prompts = (state_machine.generate_array(model, vocab, functions_name, functions, start, new_prompts))
+
+    all_prompts = (state_machine.generate_array(model, vocab, functions_name, functions, start, new_prompts, not_found_function))
 
     write_output.write_output(args, all_prompts)
