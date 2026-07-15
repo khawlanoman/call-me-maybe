@@ -1,7 +1,6 @@
-{
-	"prompt":"What is the sum of 2 and 3?",
-	"name":"fn_add_numbers"
-}{
-	"prompt":"What is the sum of 265 and 345?",
-	"name":"fn_add_numbers"
-}
+[
+	{
+		"prompt":"Replace all numbers in \"Hello 34 I'm 233 years old\" with NUMBERS",
+		"name":"fn_substitute_string_with_regex"
+	}
+]

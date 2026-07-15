@@ -4,6 +4,7 @@ from . import start
 from .  import state_machine
 from . import read_vocab
 from . import write_output
+from . import valid_prompt
 from llm_sdk.llm_sdk import Small_LLM_Model
 
 def parser_args() -> None:
@@ -20,7 +21,8 @@ if __name__ == "__main__":
     args = parser_args()
     prompts = parser.read_input_calling(args)
 
-
+    new_prompts = valid_prompt.valid_prompt(prompts)
+    #print(new_prompt)
     vocab = read_vocab.read_vocab(model)
     functions = parser.read_input_definition(args)
 
@@ -41,12 +43,15 @@ if __name__ == "__main__":
     #start.get_score(token_ids)
     
     
-    all_prompt =[]
-    for p in prompts:
-        generate_fn = start.convet(p, functions_name, functions, model)
-        result = (state_machine.state_machine( state_machine.State,  , p, vocab, model))
-        t_decode = model.decode(result)
-        all_prompt.append(t_decode)
+    # all_prompt =[]
+    # for p in prompts:
+    #     generate_fn = start.convet(p, functions_name, functions, model)
+    #     result = (state_machine.state_machine( state_machine.State, p, vocab, model))
+    #     t_decode = model.decode(result)
+    #     all_prompt.append(t_decode)
     
-    write_output.write_output(args, all_prompt)
+    # write_output.write_output(args, all_prompt)
         #print(t_decode)
+    all_prompts = (state_machine.generate_array(model, vocab, functions_name, functions, start, new_prompts))
+
+    write_output.write_output(args, all_prompts)
