@@ -8,6 +8,6 @@ def valid_prompt(prompts) -> None:
             new_prompts.append(new_prompt)
             
         else:
-            new_prompts.append(prompt)
+            new_prompts.append(prompt.prompt)
            
     return new_prompts
