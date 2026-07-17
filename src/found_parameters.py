@@ -1,11 +1,5 @@
 
 
-def parameter_append(current:str, new:str) -> str:
-    return f"{current}={new}"
-
-
-
-
 
 def found_a_number( model,np,prompt, function, parameter) -> None:
 

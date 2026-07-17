@@ -53,10 +53,11 @@ if __name__ == "__main__":
     
     # all_prompt =[]
     # for p in prompts:
-    #     generate_fn = start.convet(p, functions_name, functions, model)
-    #     result = (state_machine.state_machine( state_machine.State, p, vocab, model))
+    #     generate_fn = start.convet(p, functions_name, functions, model,not_found_function)
+    #     result = (state_machine.state_machine(state_machine.State, generate_fn, p, vocab, model))
     #     t_decode = model.decode(result)
     #     all_prompt.append(t_decode)
+
     
     # write_output.write_output(args, all_prompt)
         #print(t_decode)
@@ -64,20 +65,27 @@ if __name__ == "__main__":
     # all_prompts = (state_machine.generate_array(model, vocab, functions_name, functions, start, new_prompts, not_found_function))
 
     # write_output.write_output(args, all_prompts)
-    parameters = ["a", "b"]
- 
+
+    
+    
+    function = start.convet(prompts[0], functions_name, functions, model,not_found_function)
+    for i in functions:
+        if i.name == function:
+            t_func = i
+    parameters = valid_prompt.parameter_of_function(t_func)
     result = ""
 
     for par in parameters:
-        t_res = par+ result
+        t_res = result + par
         value = found_parameters.found_a_number(
             model,
             np,
-            "What is the sum of 250 and 30?",
-            "fn_add_numbers",
+            prompts[0],
+            function,
             t_res
         )
 
         result += f"{par}={value},"
 
     print(result)
+    
