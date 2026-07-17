@@ -75,8 +75,9 @@ if __name__ == "__main__":
     parameters = valid_prompt.parameter_of_function(t_func)
     result = ""
 
-    rest = found_parameters.found_a_string_param(model,np, t_func,prompts[0],parameters[0])
+    rest = found_parameters.found_a_string_param(model,np, t_func.name,prompts[0],parameters[0])
     print(rest)
+
 
     f"""hna numbers """
     # for par in parameters:
