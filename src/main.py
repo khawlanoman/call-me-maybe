@@ -64,5 +64,20 @@ if __name__ == "__main__":
     # all_prompts = (state_machine.generate_array(model, vocab, functions_name, functions, start, new_prompts, not_found_function))
 
     # write_output.write_output(args, all_prompts)
+    parameters = ["a", "b"]
+ 
+    result = ""
 
-   # print(found_parameters.found_a_number( model,np,"What is the sum of 2 and 3?", "fn_add_numbers"))
+    for par in parameters:
+        t_res = par+ result
+        value = found_parameters.found_a_number(
+            model,
+            np,
+            "What is the sum of 250 and 30?",
+            "fn_add_numbers",
+            t_res
+        )
+
+        result += f"{par}={value},"
+
+    print(result)

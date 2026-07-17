@@ -1,59 +1,37 @@
-def found_a_number( model,np,prompt, function) -> None:
 
-    prompt_t = f"""
-        User request:
-        {prompt}
 
-        Available function:
-        {function}
+def parameter_append(current:str, new:str) -> str:
+    return f"{current}={new}"
 
-         Rules:
-        - Select exactly ONE parameter.
-        - Return ONLY the parameter.
 
-         Examples:
 
-        User:
-        What is the sum of 2 and 3?
 
-        parameter:
-        a
 
-        Output:
-        2
+def found_a_number( model,np,prompt, function, parameter) -> None:
 
-        User:
-        What is the sum of 2 and 3?
+        prompt_t = f"""
+            -> User request: {prompt}
+            {function}({parameter}=
+            """
+        print(prompt_t)
+        prompt_ids =  model.encode(prompt_t).squeeze().tolist()
+        result = []
+       
+        allowed_ids = [model.encode(str(i)).squeeze().tolist() for i in range(10)]
+        comma = model.encode(",").squeeze().tolist()
+        allowed_ids.append(comma)
+        for _ in range(10):
+            logits  = model.get_logits_from_input_ids(prompt_ids + result)
 
-        parameter:
-        b
+            masked = np.full_like(logits, -np.inf)
 
-        Output:
-        3
-    """
+            for  i in allowed_ids:
+                masked[i] = logits[i]
+            
+            max_id = np.argmax(masked)
+            if max_id == comma:
+                break
 
-    prompt_ids =  model.encode(prompt_t).squeeze().tolist()
-    result = []
-    digits = [
-        "0", "1","2","3","4","5",
-        "6","7","8","9"
-    ]
-    digits_ids = []
-    for i in digits:
-        digits_ids.append(model.encode(i).squeeze().tolist())
-    
-    for _ in range(10):
-        logits  = model.get_logits_from_input_ids(prompt_ids + result)
+            result.append(max_id)
 
-        masked = np.full_like(logits, -np.inf)
-
-        for  i in digits:
-            masked[i] = logits[i]
-        
-        max_id = np.argmax(masked)
-        result.append(max_id)
-
-        result_text = model.decode(resulr)
-        if result_text in digits_ids:
-            return result_text
-    
+        return(model.decode(result))
