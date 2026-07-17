@@ -1,4 +1,3 @@
-from llm_sdk.llm_sdk import Small_LLM_Model
 import numpy as np
 
 def llm_prompt(prompts: list) -> None:
@@ -7,8 +6,6 @@ def llm_prompt(prompts: list) -> None:
         prompt_text = prompt.prompt
 
         f_prompt = f"{prompt_text}"
-
-                # print(f"- {param_name}: {param.type}")
         prompt_list.append(f_prompt)
 
     return (prompt_list)

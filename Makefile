@@ -4,10 +4,10 @@ install:
 	uv add torch transformers
 
 run:
-	uv run python -m src
+	uv run python -m src.main
 	
 debug:
-	uv run python -m pdb -m src
+	uv run python -m pdb -m src.main
 
 clean:
 	rm -rf __pycache__

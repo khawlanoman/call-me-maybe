@@ -1,10 +1,12 @@
 import  argparse
+import numpy as np
 from . import parser
 from . import start
 from .  import state_machine
 from . import read_vocab
 from . import write_output
 from . import valid_prompt
+from . import found_parameters
 from llm_sdk.llm_sdk import Small_LLM_Model
 
 def parser_args() -> None:
@@ -59,6 +61,8 @@ if __name__ == "__main__":
     # write_output.write_output(args, all_prompt)
         #print(t_decode)
 
-    all_prompts = (state_machine.generate_array(model, vocab, functions_name, functions, start, new_prompts, not_found_function))
+    # all_prompts = (state_machine.generate_array(model, vocab, functions_name, functions, start, new_prompts, not_found_function))
 
-    write_output.write_output(args, all_prompts)
+    # write_output.write_output(args, all_prompts)
+
+   # print(found_parameters.found_a_number( model,np,"What is the sum of 2 and 3?", "fn_add_numbers"))
