@@ -29,3 +29,22 @@ def found_a_number( model,np,prompt, function, parameter) -> None:
             result.append(max_id)
 
         return(model.decode(result))
+
+def  found_a_string_param(model,np,function, prompt, parameter) -> None:
+    prompt_t = f"""
+        -> User request: {prompt}
+        {function}({parameter}=
+        """
+    stop = model.encode('"').squeeze().tolist()
+    prompt_ids = model.encode(prompt_t).squeeze().tolist()
+    result = []
+
+    for _ in range(20):
+        logits = model.get_logits_from_input_ids(prompt_ids + result)
+
+        max_id = np.argmax(logits)
+        if max_id == stop:
+            break
+        result.append(max_id)
+    print("hna",model.decode(result))
+    return (model.decode(result))
