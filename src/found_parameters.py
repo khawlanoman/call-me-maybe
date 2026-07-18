@@ -36,43 +36,11 @@ def found_a_number( model,np,prompt, function, parameter) -> None:
 
 
 def  found_a_string_param(model,np,function, prompt, parameter) -> None:
-    prompt_t = f"""
-    Example 1
 
-    User :
-    Reverse the string 'abc'
+    prompt_t= f'''
+-> {prompt}
+{function}({parameter}="'''
 
-    Function:
-    fn_reverse_string
-
-    Parameter:
-    text='abc'
-
-    Example 2
-
-    User :
-    Reverse the string 'OpenAI'
-
-    Function:
-    fn_reverse_string
-
-    Parameter:
-    text='OpenAI'
-
-    Solve it:
-
-    User:
-    {prompt}
-
-    Function:
-    {function}
-
-    Parameter:
-    {parameter}='
-    """
-
-    stop = model.encode('"').squeeze().item()
-    stop_t = model.encode("'").squeeze().item()
     prompt_ids = model.encode(prompt_t).squeeze().tolist()
     result = []
     re_text = ""
@@ -80,15 +48,27 @@ def  found_a_string_param(model,np,function, prompt, parameter) -> None:
         logits = model.get_logits_from_input_ids(prompt_ids + result)
 
         max_id = np.argmax(logits)
-       
-        if max_id == stop or max_id == stop_t:
-            print("hna")
-            break
+        token =(model.decode([max_id]))
         result.append(max_id)
 
-        re_text += model.decode([max_id])
+        re_text += model.decode(max_id)
+        if '"' in re_text:
+            break
 
-    return (re_text)
+    return (re_text).split('"')[0]
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # def  found_a_string_param(model,np,function, prompt, parameter) -> None:
