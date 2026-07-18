@@ -7,7 +7,7 @@ def found_a_number( model,np,prompt, function, parameter) -> None:
             -> User request: {prompt}
             {function}({parameter}=
             """
-        print(prompt_t)
+        # print(prompt_t)
         prompt_ids =  model.encode(prompt_t).squeeze().tolist()
         result = []
        
@@ -44,7 +44,6 @@ def  found_a_string_param(model,np,function, prompt, parameter) -> None:
         logits = model.get_logits_from_input_ids(prompt_ids + result)
 
         max_id = np.argmax(logits)
-        token =(model.decode([max_id]))
         result.append(max_id)
 
         re_text += model.decode(max_id)

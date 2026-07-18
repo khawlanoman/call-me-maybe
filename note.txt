@@ -1,3 +1,6 @@
 1- neigative  number
-2- check type of  parameter_of_function
-3- returns
+2- float
+3- 
+
+
+
