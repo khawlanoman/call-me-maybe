@@ -67,16 +67,16 @@ if __name__ == "__main__":
     # write_output.write_output(args, all_prompts)
 
     
-    
-    function = start.convet(prompts[0], functions_name, functions, model,not_found_function)
-    for i in functions:
-        if i.name == function:
-            t_func = i
-    parameters = valid_prompt.parameter_of_function(t_func)
-    result = ""
-
-    rest = found_parameters.found_a_string_param(model,np, t_func.name,prompts[0],parameters[0])
-    print(rest)
+    """hna strnig"""
+    # function = start.convet(prompts[0], functions_name, functions, model,not_found_function)
+    # for i in functions:
+    #     if i.name == function:
+    #         t_func = i
+    # parameters = valid_prompt.parameter_of_function(t_func)
+    # result = ""
+    # for k in parameters:
+    #     rest = found_parameters.found_a_string_param(model,np, t_func.name,prompts[0],k)
+    #     print(rest)
 
 
     f"""hna numbers """
@@ -94,3 +94,13 @@ if __name__ == "__main__":
 
     # print(result)
     
+
+    """ hna return """
+    function = start.convet(prompts[0], functions_name, functions, model,not_found_function)
+    for i in functions:
+        if i.name == function:
+            t_func = i
+    parameters = valid_prompt.parameter_of_function(t_func)
+    result = ""
+    rest = found_parameters.found_a_string_param(model,np, t_func.name,prompts[0],k)
+    print(rest)
