@@ -100,7 +100,14 @@ def  state_machine( State, function_n, prompt, vocab, model, params) -> None:
             for i in token_ids:
                 result.append(i)
             result.append(read_vocab.take_token_vocab(vocab,":"))
-            token_ids =  model.encode(f' "{v}"').squeeze().tolist()
+            if isinstance(v, str):
+                try:
+                    float(v)
+                    token_ids = model.encode(f' {v}').squeeze().tolist()
+                except ValueError:
+                    token_ids = model.encode(f' "{v}"').squeeze().tolist()
+            else:
+                token_ids = model.encode(f' {v}').squeeze().tolist()
             for i in token_ids:
                 result.append(i)
             #result.append(read_vocab.take_token_vocab(vocab, v))
