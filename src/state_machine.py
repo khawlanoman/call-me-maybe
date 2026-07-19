@@ -131,24 +131,26 @@ def  state_machine( State, function_n, prompt, vocab, model, params) -> None:
     return result
 
 
-def generate_array(model, vocab,functions_name, functions,start, prompts,not_found_function,all_params) -> None:
-    all_prompt = []
+
+def generate_array(model, vocab, outputs):
+
+    result = []
+
     start_list = read_vocab.take_token_vocab(vocab, "[")
     end_list = read_vocab.take_token_vocab(vocab, "]")
     comma = read_vocab.take_token_vocab(vocab, ",")
     new_line = model.encode("\n").squeeze().tolist()
 
-    all_prompt.append(model.decode(start_list))
-   # all_prompt.append(model.decode(tab_new_line))
-    print(prompts)
-    for index,p in enumerate(prompts):
-        generate_fn = start.convet(p, functions_name, functions, model,not_found_function)
-        result = (state_machine( State, generate_fn, p, vocab, model, all_params[index]))
-        t_decode = model.decode(result)
-        all_prompt.append(t_decode)
-        if  p != prompts[-1]:
-            all_prompt.append(model.decode(comma))
-    all_prompt.append(model.decode(new_line))
-    all_prompt.append(model.decode(end_list))
+    result.append(model.decode(start_list))
 
-    return all_prompt
+    for i, output in enumerate(outputs):
+
+        result.append(output)
+
+        if i != len(outputs) - 1:
+            result.append(model.decode(comma))
+
+    result.append(model.decode(new_line))
+    result.append(model.decode(end_list))
+
+    return result

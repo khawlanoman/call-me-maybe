@@ -39,7 +39,7 @@ def found_a_number( model,np,prompt, function, parameter) -> None:
                 masked[i] = logits[i]
             
             max_id = np.argmax(masked)
-            print( model.decode(max_id))
+            
             if max_id == comma:
                 break
 
