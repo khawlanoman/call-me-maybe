@@ -4,15 +4,25 @@
 def found_a_number( model,np,prompt, function, parameter) -> None:
 
         prompt_t = f"""
+            You are extracting function parameters.
+
+            Rules:
+            - Do NOT solve the user's request.
+            - Return only the value of the requested parameter.
+            - If the user asks for a square root, return the original input number, not the square root.
+            - Keep negative numbers and decimal numbers exactly as they appear.
+
             Example:
             User request: What is the sum of -5 and 8?
-            fn_add_numbers(a=-5,b=8)
+            fn_add_numbers(a = -5, b = 8)
 
-            User request: What is the sum of 5 and 8?
-            fn_add_numbers(a=5,b=8)
+            User request: Calculate the square root of 300
+            Function: fn_get_square_root(a = 300)
+
+            Now complete this:
 
             User request: {prompt}
-            {function}({parameter}=
+            Function: {function}({parameter}=
             """
         # print(prompt_t)
         prompt_ids =  model.encode(prompt_t).squeeze().tolist()

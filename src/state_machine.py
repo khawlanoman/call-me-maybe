@@ -103,7 +103,7 @@ def  state_machine( State, function_n, prompt, vocab, model, params) -> None:
             if isinstance(v, str):
                 try:
                     float(v)
-                    token_ids = model.encode(f' {v}').squeeze().tolist()
+                    token_ids = model.encode(f' {float(v)}').squeeze().tolist()
                 except ValueError:
                     token_ids = model.encode(f' "{v}"').squeeze().tolist()
             else:
