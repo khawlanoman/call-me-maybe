@@ -61,9 +61,26 @@ def found_a_number( model,np,prompt, function, parameter) -> None:
 
 def  found_a_string_param(model,np,function, prompt, parameter) -> None:
 
-    prompt_t= f'''
--> {prompt}
-{function}({parameter}="'''
+    prompt_t = f"""
+You are extracting the regular expression for a function call.
+
+Examples:
+
+User request:
+Replace all numbers in "abc123" with X
+fn_substitute_string_with_regex(regex="\\d+")
+
+User request:
+Replace all vowels in "hello" with *
+fn_substitute_string_with_regex(regex="[aeiouAEIOU]")
+
+Now:
+
+User request:
+{prompt}
+
+{function}({parameter}="
+"""
 
     prompt_ids = model.encode(prompt_t).squeeze().tolist()
     result = []
@@ -80,22 +97,3 @@ def  found_a_string_param(model,np,function, prompt, parameter) -> None:
 
     return (re_text).split('"')[0]
 
-
-def  found_return_(model,np,function, prompt, parameter) -> None:
-    prompt_t = f"""
-        -> User request: {prompt}
-        {function}({parameter}=
-        """
-    stop = model.encode('"').squeeze().tolist()
-    prompt_ids = model.encode(prompt_t).squeeze().tolist()
-    result = []
-
-    for _ in range(20):
-        logits = model.get_logits_from_input_ids(prompt_ids + result)
-
-        max_id = np.argmax(logits)
-        if max_id == stop:
-            break
-        result.append(max_id)
-    print("hna",model.decode(result))
-    return (model.decode(result))
