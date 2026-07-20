@@ -2,12 +2,6 @@
  [
    
    {
-     "prompt": "Greet shrek"
-   },
-   {
-     "prompt": "Greet john"
-   },
-   {
      "prompt": "Reverse the string 'hello'"
    },
    {

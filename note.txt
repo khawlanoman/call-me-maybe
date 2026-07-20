@@ -1,6 +1,6 @@
 1- neigative  number
-2- float
-3- 
+2- regex
+3- output file
 
 
 

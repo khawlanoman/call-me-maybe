@@ -61,26 +61,32 @@ def found_a_number( model,np,prompt, function, parameter) -> None:
 
 def  found_a_string_param(model,np,function, prompt, parameter) -> None:
 
+    # if parameter == "regex":
     prompt_t = f"""
-You are extracting the regular expression for a function call.
+    You are extracting the regular expression for a function call.
 
-Examples:
+    Rules:
+    - Return ONLY the value of the requested parameter.
+    - Do not explain.
+    - Do not return the function call.
+    - Do not return any other parameters.
+    - Do not add extra text.
 
-User request:
-Replace all numbers in "abc123" with X
-fn_substitute_string_with_regex(regex="\\d+")
+    Examples:
+    User request:
+    Replace all numbers in "abc123" with NUM  
+    fn_substitute_string_regex(source_string="abc123",regex="[0-9]" ,replacement = "NUM")
 
-User request:
-Replace all vowels in "hello" with *
-fn_substitute_string_with_regex(regex="[aeiouAEIOU]")
-
-Now:
-
-User request:
-{prompt}
-
-{function}({parameter}="
-"""
+    User request:
+    {prompt}
+    {function}({parameter}="
+    """
+#     else:
+#         prompt_t = f"""
+# -> User request:
+# {prompt}
+# {function}({parameter}="
+# """
 
     prompt_ids = model.encode(prompt_t).squeeze().tolist()
     result = []
@@ -96,4 +102,3 @@ User request:
             break
 
     return (re_text).split('"')[0]
-
