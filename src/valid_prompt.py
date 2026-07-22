@@ -27,12 +27,3 @@ def check_parameter(function) -> None:
     for k,v in function.parameters.items():
         return(v.type)
     return None
-
-# def parameter_type(type_param) -> None:
-#     if type_param == "number":
-#         return ("found_a_number")
-#     else if type_param == "string"
-#         return 
-    
-#     else:
-#         return 

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-def write_output(args, output_text) -> None:
+def write_output(args: None, output_text: str) -> None:
     # Output path from the command line
     output_path = Path(args.output)
 

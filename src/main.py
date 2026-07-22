@@ -16,7 +16,7 @@ def parser_args() -> None:
     parser.add_argument("--output", default="data/output/function_calls.json")
     args = parser.parse_args()
     return args
-    #print(f"args= {args.input}")
+
 
 if __name__ == "__main__":
     try:
@@ -25,16 +25,16 @@ if __name__ == "__main__":
         prompts = parser.read_input_calling(args)
 
         new_prompts = valid_prompt.valid_prompt(prompts)
-        #print(new_prompt)
+
         vocab = read_vocab.read_vocab(model)
         functions = parser.read_input_definition(args)
-        # print(functions)
+
         not_found_function  ={ 
             "name":"fn_not_found", 
             "description":" this  function is for the",
             "parameters": {}
             }
-        # list_prompt = start.llm_prompt(prompts)
+
         functions_name = start.function_token_ids(functions, model, not_found_function)
     
     
@@ -69,11 +69,6 @@ if __name__ == "__main__":
                 
 
                 params[k]=rest.strip("\n")
-            # print("prompt:",p)
-            # print(result_text)
-            # for i in result_text.strip(',').split(','):
-            #     key, value = i.split('=',1)
-            #     params[key.strip()] = value.strip()
 
             all_params.append(params)
 
