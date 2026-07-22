@@ -1,10 +1,9 @@
+from argparse import Namespace
 from pathlib import Path
 
-def write_output(args: None, output_text: str) -> None:
-    # Output path from the command line
-    output_path = Path(args.output)
 
-    # Create parent directories if they don't exist
+def write_output(args: Namespace, output_text: list) -> None:
+    output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     try:

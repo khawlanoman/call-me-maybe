@@ -1,9 +1,0 @@
-Metadata-Version: 2.4
-Name: call_me_maybe
-Version: 1.0.0
-Author: khnoman
-Requires-Python: >=3.10
-Requires-Dist: numpy>=2.0.0
-Requires-Dist: requests>=2.32.0
-Requires-Dist: torch>=2.13.0
-Requires-Dist: transformers>=5.13.1

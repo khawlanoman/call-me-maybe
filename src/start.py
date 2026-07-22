@@ -1,8 +1,10 @@
 import numpy as np
+from typing import Any
 
-def llm_prompt(prompts: list) -> None:
+
+def llm_prompt(prompts: list) -> list:
     prompt_list = []
-    for prompt in  prompts:
+    for prompt in prompts:
         prompt_text = prompt.prompt
 
         f_prompt = f"{prompt_text}"
@@ -10,27 +12,31 @@ def llm_prompt(prompts: list) -> None:
 
     return (prompt_list)
 
-def function_token_ids(functions: list, model, not_found_function) -> None:
-   
+
+def function_token_ids(functions: list, model: Any,
+                       not_found_function: Any) -> list:
+
     all_functions = []
     for v in functions:
         all_functions.append(model.encode(v.name).squeeze().tolist())
-    all_functions.append(model.encode(not_found_function["name"]).squeeze().tolist())
-    return(all_functions)
+    all_functions.append(model.encode(not_found_function["name"]).squeeze().tolist()) # noqa
+    return (all_functions)
 
 
-def convet(prompt, list_functions, functions, model ,not_found_function) -> str:
+def convet(prompt: str, list_functions: list, functions: Any,
+           model: Any, not_found_function: Any) -> str | None:
 
     functions_dict = {
         fn.name: fn.description for fn in functions
     }
 
-    functions_dict[not_found_function["name"]] = not_found_function["description"]
+    functions_dict[not_found_function["name"]] = not_found_function["description"] # noqa
 
     full_prompt = f"""
     You are a function selection agent.
 
-    Your task is to analyze the user's request and determine which available function is the best match.
+    Your task is to analyze the user's request and
+    determine which available function is the best match.
 
     User request:
     {prompt}
@@ -78,17 +84,18 @@ def convet(prompt, list_functions, functions, model ,not_found_function) -> str:
 
     Output:
     """
-    functions_text =  model.decode(list_functions)
+    functions_text = model.decode(list_functions)
     functions_text.append('"')
     prompt_ids = model.encode(full_prompt).squeeze().tolist()
-    result = []
+    result: list[Any] = []
     for _ in range(30):
         logits = model.get_logits_from_input_ids(prompt_ids + result)
-        
+
         masked = np.full_like(logits, -np.inf)
 
         if result:
-            t_functions = [fn for fn in list_functions if fn[:len(result)] == result]
+            t_functions = [fn for fn in list_functions
+                           if fn[:len(result)] == result]
         else:
             t_functions = list_functions
         for v in t_functions:
@@ -96,10 +103,10 @@ def convet(prompt, list_functions, functions, model ,not_found_function) -> str:
                 masked[tkid] = logits[tkid]
         cor = np.argmax(masked)
         result.append(cor)
-       
+
         result_txt = model.decode(result)
 
         if result_txt in functions_text:
-            return result_txt
-        
+            return (f"{result_txt}")
+
     return None
