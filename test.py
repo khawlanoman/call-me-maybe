@@ -152,3 +152,14 @@ if __name__ == "__main__":
 #     }
 #   }
 # ]
+
+
+find /home/khnoman-type f -printf '%s %p\n' 2>/dev/null | sort -rn | head -20 | awk '{size=$1/1024/1024; printf "%.2f MB\t%s\n", size, $2}'
+export PIP_CACHE_DIR=/home/khnoman/goinfre/pip-cache
+export POETRY_CACHE_DIR=/home/khnoman/goinfre/pypoetry-cache
+export PYTHONUSERBASE=/home/khnoman/goinfre/python-user
+export UV_CACHE_DIR=/home/khnoman/goinfre/cash/
+mkdir -p /home/khnoman/goinfre/venv
+export UV_PROJECT_ENVIRONMENT=/home/khnoman/goinfre/venv/
+export XDG_CACHE_HOME=/home/khnoman/goinfre/
+export XDG_DATA_HOME=/home/khnoman/goinfre/

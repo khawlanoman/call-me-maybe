@@ -6,7 +6,9 @@ def valid_prompt(prompts) -> None:
         if '"' in prompt.prompt:
             new_prompt = prompt.prompt.replace('"','\\"')
             new_prompts.append(new_prompt)
-            
+        elif "\\" in prompt.prompt:
+            new_prompt = prompt.prompt.replace('\\','\\\\')
+            new_prompts.append(new_prompt)
         else:
             new_prompts.append(prompt.prompt)
            

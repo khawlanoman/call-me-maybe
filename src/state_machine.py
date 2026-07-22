@@ -18,7 +18,7 @@ class State(Enum):
     CLOSE_BRACE = 14
     END = 15
 
-def  state_machine( State, function_n, prompt, vocab, model, params) -> None:
+def  state_machine( State, function_n, prompt, vocab, model, params,key) -> None:
     state = State.START
     result = []
     #for i in range(8):
@@ -103,7 +103,10 @@ def  state_machine( State, function_n, prompt, vocab, model, params) -> None:
             if isinstance(v, str):
                 try:
                     float(v)
-                    token_ids = model.encode(f' {float(v)}').squeeze().tolist()
+                    if key == "number":
+                        token_ids = model.encode(f' {float(v)}').squeeze().tolist()
+                    elif key == "integer":
+                        token_ids = model.encode(f' {int(v)}').squeeze().tolist()
                 except ValueError:
                     token_ids = model.encode(f' "{v}"').squeeze().tolist()
             else:

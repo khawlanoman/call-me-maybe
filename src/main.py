@@ -50,7 +50,7 @@ if __name__ == "__main__":
                     break
     
             parameters = valid_prompt.parameter_of_function(t_func)
-            
+            params={}
             result_text = ""
 
             for k in parameters:
@@ -59,23 +59,25 @@ if __name__ == "__main__":
 
                 param_type = valid_prompt.check_parameter(t_func)
 
-                if param_type == "number":
+                if param_type  == "string":
+                    rest = found_parameters.found_a_string_param(model,np, t_func.name,p,t_res, k)
+                    result_text += f'{k}="{rest}", '
+                else:
                     rest = found_parameters.found_a_number(model,np,p,t_func,t_res)
-                
-                elif param_type == "string":
-                    rest = found_parameters.found_a_string_param(model,np, t_func.name,p,t_res)
-                
-                result_text += f"{k} ={rest},"
+                    result_text += f'{k}={rest},\n'
 
-            params= {}
+                
 
-            for i in result_text.strip(',').split(','):
-                key, value = i.split('=',1)
-                params[key.strip()] = value.strip()
+                params[k]=rest.strip("\n")
+            # print("prompt:",p)
+            # print(result_text)
+            # for i in result_text.strip(',').split(','):
+            #     key, value = i.split('=',1)
+            #     params[key.strip()] = value.strip()
 
             all_params.append(params)
 
-            result = (state_machine.state_machine(state_machine.State, generate_fn, p, vocab, model, all_params[index]))
+            result = (state_machine.state_machine(state_machine.State, generate_fn, p, vocab, model, all_params[index],param_type))
             
             t_decode = model.decode(result)
             all_prompt.append(t_decode)
