@@ -19,7 +19,7 @@ def function_token_ids(functions: list, model: Any,
     all_functions = []
     for v in functions:
         all_functions.append(model.encode(v.name).squeeze().tolist())
-    all_functions.append(model.encode(not_found_function["name"]).squeeze().tolist()) # noqa
+    all_functions.append(model.encode(not_found_function.name).squeeze().tolist()) # noqa
     return (all_functions)
 
 
@@ -30,7 +30,7 @@ def convet(prompt: str, list_functions: list, functions: Any,
         fn.name: fn.description for fn in functions
     }
 
-    functions_dict[not_found_function["name"]] = not_found_function["description"] # noqa
+    functions_dict[not_found_function.name] = not_found_function.description # noqa
 
     full_prompt = f"""
     You are a function selection agent.
@@ -109,4 +109,4 @@ def convet(prompt: str, list_functions: list, functions: Any,
         if result_txt in functions_text:
             return (f"{result_txt}")
 
-    return None
+    return (f"{not_found_function}")

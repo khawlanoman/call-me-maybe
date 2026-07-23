@@ -98,38 +98,43 @@ def state_machine(State: Any, function_n: str, prompt: str,
         state = State.PARAMS_COMMA
 
     if state == State.PARAMS_COMMA:
-        param = params.items()
-        for index, (k, v) in enumerate(param):
 
-            token_ids = model.encode(f'"{k}"').squeeze().tolist()
-            for i in token_ids:
-                result.append(i)
-            result.append(read_vocab.take_token_vocab(vocab, ":"))
-            if isinstance(v, str):
-                try:
-                    #print(f"i:{v}, type:{key}")
-                    if key == "number":
-                        float(v)
-                        token_ids = model.encode(f' {float(v)}').squeeze().tolist() # noqa
-                    elif key == "integer":
-                        int(v)
-                        token_ids = model.encode(f' {int(v)}').squeeze().tolist() # noqa
-                    else:
+        if params is None:
+            result.append(read_vocab.take_token_vocab(vocab, "}"))
+            state = State.PARAMS_CLOSE
+        else:
+            param = params.items()
+            for index, (k, v) in enumerate(param):
+
+                token_ids = model.encode(f'"{k}"').squeeze().tolist()
+                for i in token_ids:
+                    result.append(i)
+                result.append(read_vocab.take_token_vocab(vocab, ":"))
+                if isinstance(v, str):
+                    try:
+
+                        if key == "number":
+                            float(v)
+                            token_ids = model.encode(f' {float(v)}').squeeze().tolist() # noqa
+                        elif key == "integer":
+                            int(v)
+                            token_ids = model.encode(f' {int(v)}').squeeze().tolist() # noqa
+                        else:
+                            token_ids = model.encode(f' "{v}"').squeeze().tolist() # noqa
+                    except ValueError:
                         token_ids = model.encode(f' "{v}"').squeeze().tolist()
-                except ValueError:
-                    token_ids = model.encode(f' "{v}"').squeeze().tolist()
-            else:
-                token_ids = model.encode(f' {v}').squeeze().tolist()
+                else:
+                    token_ids = model.encode(f' {v}').squeeze().tolist()
 
-            if isinstance(token_ids, int):
-                token_ids = [token_ids]
-            for i in token_ids:
-                result.append(i)
+                if isinstance(token_ids, int):
+                    token_ids = [token_ids]
+                for i in token_ids:
+                    result.append(i)
 
-            if index != len(param) - 1:
-                result.append(read_vocab.take_token_vocab(vocab, ","))
-        result.append(read_vocab.take_token_vocab(vocab, "}"))
-        state = State.PARAMS_CLOSE
+                if index != len(param) - 1:
+                    result.append(read_vocab.take_token_vocab(vocab, ","))
+            result.append(read_vocab.take_token_vocab(vocab, "}"))
+            state = State.PARAMS_CLOSE
 
     if state == State.PARAMS_CLOSE:
         result.append(new_line)

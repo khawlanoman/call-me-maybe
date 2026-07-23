@@ -17,11 +17,7 @@
   {
     "name": "fn_is_even",
     "description": "Check if an integer is even, returns True if even, False if odd.",
-    "parameters": {
-      "n": {
-        "type": "integer"
-      }
-    },
+    "parameters": {},
     "returns": {
       "type": "boolean"
     }

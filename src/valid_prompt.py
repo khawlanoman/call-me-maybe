@@ -1,5 +1,6 @@
 from . import models
 
+
 def valid_prompt(prompts: list) -> list:
     new_prompts = []
     for prompt in prompts:
@@ -24,7 +25,7 @@ def parameter_of_function(function: models.Function_definition) -> list:
     return parameter
 
 
-def check_parameter(function: models.Function_definition) -> str | None:
+def check_parameter(function: models.Function_definition) -> str:
     for k, v in function.parameters.items():
         return (f"{v.type}")
-    return None
+    return ''

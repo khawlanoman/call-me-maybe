@@ -3,7 +3,8 @@ import types
 
 
 def found_a_number(model: Any, np: types.ModuleType,
-                   prompt: str, function: str, parameter: str) -> str: # noqa
+                   prompt: str, function: str,
+                   parameter: str) -> str:
 
     prompt_t = f'''
     #-> {prompt}

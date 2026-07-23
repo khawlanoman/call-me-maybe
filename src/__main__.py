@@ -1,6 +1,7 @@
 import argparse
 import sys
 import numpy as np
+from . import models
 from . import parser
 from . import start
 from typing import Any
@@ -35,11 +36,12 @@ if __name__ == "__main__":
         vocab = read_vocab.read_vocab(model)
         functions = parser.read_input_definition(args)
 
-        not_found_function = {
-            "name": "fn_not_found",
-            "description": " this function is for the",
-            "parameters": {}
-            }
+        not_found_function = models.Function_definition(
+            name="fn_unknown",
+            description="Handle user requests that do not match any available function.", # noqa
+            parameters={},
+            returns=models.Returns(type="void")
+        )
 
         functions_name = start.function_token_ids(functions, model,
                                                   not_found_function)
@@ -56,29 +58,33 @@ if __name__ == "__main__":
                     t_func = i
                     break
             if t_func is None:
-                raise ValueError("function not found")
-            parameters = valid_prompt.parameter_of_function(t_func)
+                t_func = not_found_function
             params = {}
-            result_text = ""
+            param_type = ""
+            print(p)
+            if len(t_func.parameters) > 0:
+                parameters = valid_prompt.parameter_of_function(t_func)
 
-            for k in parameters:
+                result_text = ""
+                for k in parameters:
 
-                t_res = result_text + k
+                    t_res = result_text + k
 
-                param_type = valid_prompt.check_parameter(t_func)
-                
-                if param_type == "string":
+                    param_type = valid_prompt.check_parameter(t_func)
 
-                    rest = found_parameters.found_a_string_param(model,
-                                                                 np, t_func.name,p,t_res, k) # noqa
-                    result_text += f'{k}="{rest}", '
-                else:
+                    if param_type == "string":
 
-                    rest = found_parameters.found_a_number(model, np,
-                                                           p, t_func, t_res)
-                    result_text += f'{k}={rest},\n'
+                        rest = found_parameters.found_a_string_param(model,
+                                                                    np, t_func.name,p,t_res, k) # noqa
+                        result_text += f'{k}="{rest}", '
+                    else:
 
-                params[k] = rest.strip("\n")
+                        rest = found_parameters.found_a_number(model, np,
+                                                               p, t_func.name,
+                                                               t_res)
+                        result_text += f'{k}={rest},\n'
+
+                    params[k] = rest.strip("\n")
 
             all_params.append(params)
             if generate_fn is None or param_type is None:
