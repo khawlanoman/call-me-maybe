@@ -61,17 +61,17 @@ if __name__ == "__main__":
                 t_func = not_found_function
             params = {}
             param_type = ""
-            print(p)
+            print(t_func)
             if len(t_func.parameters) > 0:
                 parameters = valid_prompt.parameter_of_function(t_func)
-
+                
                 result_text = ""
                 for k in parameters:
 
                     t_res = result_text + k
-
+                    
                     param_type = valid_prompt.check_parameter(t_func)
-
+                    
                     if param_type == "string":
 
                         rest = found_parameters.found_a_string_param(model,
@@ -85,7 +85,7 @@ if __name__ == "__main__":
                         result_text += f'{k}={rest},\n'
 
                     params[k] = rest.strip("\n")
-
+                    print(params[k], rest)
             all_params.append(params)
             if generate_fn is None or param_type is None:
                 raise ValueError("error")
